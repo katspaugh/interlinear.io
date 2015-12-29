@@ -1,0 +1,35 @@
+{
+  "name": "interlinear",
+  "version": "1.0.1",
+  "description": "Interlinear.io",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/webpack/bin/webpack.js",
+    "rsync": "rsync -av --exclude='ng2/app' --exclude='ng2/*.ts' ng2/* public",
+    "prestart": "npm run build; npm run rsync",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "katspaugh@gmail.com",
+  "license": "BSD 3-Clause",
+  "dependencies": {
+    "ts-loader": "^0.7.2",
+    "typescript": "^1.7.3",
+    "webpack": "^1.12.9",
+    "body-parser": "*",
+    "cookie-parser": "*",
+    "cookie-session": "*",
+    "express": "*",
+    "mongodb": "*",
+    "passport": "*",
+    "passport-facebook": "*",
+    "q": "*",
+    "request-promise": "*",
+    "angular2": "*",
+    "es6-promise": "3.0.2",
+    "es6-shim": "0.33.3",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.0",
+    "zone.js": "0.5.10"
+  }
+}

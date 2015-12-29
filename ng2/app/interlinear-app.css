@@ -1,0 +1,43 @@
+/* Header */
+.header {
+    background-color: #008acc;
+    line-height: 50px;
+}
+
+.header__logo {
+    font-size: 22px;
+    letter-spacing: 1.1px;
+    font-weight: normal;
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.header__logo a,
+.header__logo a:hover,
+.header__logo a:active,
+.header__logo a:focus,
+.header__logo a:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Footer */
+footer {
+    background-color: #008acc;
+    padding: 15px 0;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    bottom: 0;
+}
+
+footer p {
+    font-size: 16px;
+    margin: 0;
+}
+
+footer a {
+    text-decoration: underline;
+    color: #fff;
+}
