@@ -6,7 +6,7 @@ import {Directive, AfterViewInit, ElementRef, Renderer} from 'angular2/core';
 export class Sticky implements AfterViewInit {
     constructor(private el: ElementRef, private renderer: Renderer) {}
 
-    css(prop, val) {
+    private css(prop, val) {
         this.renderer.setElementStyle(this.el, prop, val);
     }
 

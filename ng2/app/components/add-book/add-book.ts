@@ -63,7 +63,6 @@ export class AddBook {
                 },
                 err => this.isSaving = false
             );
-
     }
 
     submit() {
@@ -76,7 +75,6 @@ export class AddBook {
                     this.router.navigate([ 'Book', { id: data._id } ]);
                 },
                 err => this.isSaving = false
-            )
-
+            );
     }
 };

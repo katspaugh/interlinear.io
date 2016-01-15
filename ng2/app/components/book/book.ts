@@ -8,8 +8,8 @@ import {Definition} from '../definition/definition';
 import {Vocab} from '../vocab/vocab';
 import {Sticky} from '../sticky/sticky';
 
-const DELIMS = ',.!?;:–«»‹›()';
-const DELIMS_RE = new RegExp(`[${ DELIMS }]`, 'g');
+const DELIMS: string = ',.!?;:–«»‹›()';
+const DELIMS_RE: RegExp = new RegExp(`[${ DELIMS }]`, 'g');
 
 
 @Component({
@@ -24,10 +24,10 @@ export class Book {
     title: Note;
     author: Note;
     annotations: Note[];
-    isSpecial = true;
+    isSpecial: boolean = true;
 
     currentTerm: Note;
-    showTranslation = true;
+    showTranslation: boolean = true;
 
     constructor(
         private backend: Backend,
@@ -81,8 +81,6 @@ export class Book {
 
         this.userVocab.add(this.id, this.currentTerm);
     }
-
-    public toggleTranslation
 
     public remove() {
         this.backend.delete(`/texts/${ this.id }`)

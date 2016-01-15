@@ -22,9 +22,5 @@ module.exports = {
       { test: /\.ts$/, loader: 'ts-loader' },
     ],
     noParse: [ /angular2\/bundles\/.+/ ]
-  },
-
-  devServer: {
-    historyApiFallback: true
   }
 };

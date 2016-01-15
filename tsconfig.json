@@ -11,6 +11,9 @@
         "moduleResolution": "node"
     },
     "exclude": [
-        "node_modules"
+        "etc",
+        "src",
+        "node_modules",
+        "typings"
     ]
 }

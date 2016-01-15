@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class Backend {
-    base = '';
+    private base: string = '';
 
     constructor(private http: Http) {}
 
@@ -13,7 +13,7 @@ export class Backend {
         let url = `${ this.base }${ path }`;
         let body = data ? JSON.stringify(data) : '';
 
-	return this.http.request(url, {
+        return this.http.request(url, {
             body: body,
             method: method,
             headers: new Headers({
@@ -24,7 +24,7 @@ export class Backend {
 
     get(path: string) {
         let url = `${ this.base }${ path }`;
-	return this.http.get(url).map(res => res.json());
+        return this.http.get(url).map(res => res.json());
     }
 
     post(path: string, data: any) {

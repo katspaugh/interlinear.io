@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, ViewEncapsulation, enableProdMode} from 'angular2/core';
 import {Router, Route, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {Home} from './components/home/home';
@@ -10,7 +10,14 @@ import {Login} from './components/login/login';
 import {Backend} from './services/backend';
 import {UserVocab} from './services/user-vocab';
 
+
+if (1 || window.location.host == 'www.interlinear.io') {
+    enableProdMode()
+}
+
+
 @Component({
+    encapsulation: ViewEncapsulation.None,
     selector: 'interlinear-app',
     providers: [Backend, UserVocab],
     templateUrl: 'app/interlinear-app.html',
