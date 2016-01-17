@@ -27,15 +27,15 @@ export class Backend {
         return this.http.get(url).map(res => res.json());
     }
 
-    post(path: string, data: any) {
+    post(path: string, data: any = null) {
         return this.request('POST', path, data);
     }
 
-    put(path: string, data: any) {
+    put(path: string, data: any = null) {
         return this.request('PUT', path, data);
     }
 
-    delete(path: string) {
-        return this.request('DELETE', path);
+    delete(path: string, data: any = null) {
+        return this.request('DELETE', path, data);
     }
 };

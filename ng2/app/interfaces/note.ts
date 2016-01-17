@@ -3,4 +3,4 @@ export interface Note {
     note: string,
     id?: string,
     dupe?: number
-}
+};

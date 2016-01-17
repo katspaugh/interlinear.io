@@ -4,6 +4,7 @@ import {Router, RouteParams} from 'angular2/router';
 import {Backend} from '../../services/backend';
 import {UserVocab} from '../../services/user-vocab';
 import {Note} from '../../interfaces/note';
+import {Card} from '../../interfaces/card';
 import {Definition} from '../definition/definition';
 import {Vocab} from '../vocab/vocab';
 import {Sticky} from '../sticky/sticky';
@@ -72,14 +73,31 @@ export class Book {
         return annotations;
     }
 
-    public selectTerm(note: Note) {
+    private getContext(index: number): string {
+        const range: number = 20;
+
+        let slice = this.annotations.slice(index - range, index + range);
+        let text = slice.map((note: Note) => note.text).join('').trim();
+
+        return text;
+    }
+
+    public selectTerm(note: Note, index: number) {
         this.currentTerm = {
             id: note.id,
             text: note.text.replace(DELIMS_RE, ''),
             note: note.note
         };
 
-        this.userVocab.add(this.id, this.currentTerm);
+        let card: Card = {
+            bookId: this.id,
+            text: this.currentTerm.text,
+            note: this.currentTerm.note,
+            position: index,
+            context: this.getContext(index)
+        };
+
+        this.userVocab.add(card);
     }
 
     public remove() {

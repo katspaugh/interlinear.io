@@ -1,56 +1,58 @@
 import {Injectable} from 'angular2/core';
 
 import {Backend} from './backend';
-import {Note} from '../interfaces/note';
+import {Card} from '../interfaces/card';
 
 @Injectable()
 export class UserVocab {
-    private store: { [id: string]: Note[] } = {};
+    private store: { [bookId: string]: Card[] } = {};
 
     constructor(private backend: Backend) {}
 
-    private loadVocab(id: string) {
-        this.backend.get(`/user/vocab/${ id }`)
+    private loadVocab(bookId: string) {
+        let store = this.store[bookId] = this.store[bookId] || [];
+
+        this.backend.get(`/vocab/${ bookId }`)
             .subscribe(
-                data => this.store[id].unshift(...data.words),
-                err => this.store[id]
+                data => store.unshift(...data),
+                err => store
             );
     }
 
-    private addVocab(id: string, note: Note) {
-        this.backend.put(`/user/vocab/${ id }`, {
-            word: note
-        }).subscribe(() => null);
+    private addVocab(card: Card) {
+        this.backend.post(`/vocab`, card)
+            .subscribe(() => null);
     }
 
-    private removeVocab(id: string, note: Note) {
-        this.backend.put(`/user/vocab/${ id }/remove`, {
-            word: note
-        }).subscribe(() => null);
+    private removeVocab(card: Card) {
+        this.backend.delete(`/vocab`, { _id: card._id })
+            .subscribe(() => null);
     }
 
-    add(id: string, note: Note) {
-        let store = this.store[id] = this.store[id] || [];
+    add(card: Card) {
+        let bookId = card.bookId;
+        let store = this.store[bookId] = this.store[bookId] || [];
 
         let isUnique = store.every((item) => {
-            return item.note != note.note && item.text != note.text;
+            return item.note != card.note && item.text != card.text;
         });
 
         if (isUnique) {
-            this.addVocab(id, note);
-            store.unshift(note);
+            this.addVocab(card);
+            store.unshift(card);
         }
     }
 
-    remove(id: string, note: Note) {
-        let store = this.store[id] = this.store[id] || [];
-        store.splice(store.indexOf(note), 1);
-        this.removeVocab(id, note);
+    remove(card: Card) {
+        let bookId = card.bookId;
+        let store = this.store[bookId] = this.store[bookId] || [];
+        store.splice(store.indexOf(card), 1);
+        this.removeVocab(card);
     }
 
-    load(id: string) {
-        let store = this.store[id] = this.store[id] || [];
-        this.loadVocab(id);
+    load(bookId: string) {
+        let store = this.store[bookId] = this.store[bookId] || [];
+        this.loadVocab(bookId);
         return store;
     }
 };

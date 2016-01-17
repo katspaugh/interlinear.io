@@ -20,8 +20,8 @@
             </div>
 
             <div class="words {{ showTranslation ? '' : 'words_hide-notes' }}">
-<div *ngFor="#item of annotations" id="{{ item.id }}" class="word_occur_{{ item.dupe || 0 }}"><!--
---><ruby *ngIf="item.note" (click)="selectTerm(item)"><rtc>{{ item.note }}</rtc>{{ item.text }}</ruby><!--
+<div *ngFor="#item of annotations #i=index" id="{{ item.id }}" class="word_occur_{{ item.dupe || 0 }}"><!--
+--><ruby *ngIf="item.note" (click)="selectTerm(item, i)"><rtc>{{ item.note }}</rtc>{{ item.text }}</ruby><!--
 --><span *ngIf="!item.note">{{ item.text }}</span><!--
 --></div>
             </div>

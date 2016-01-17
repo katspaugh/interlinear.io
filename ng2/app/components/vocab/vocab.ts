@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
 
-import {Note} from '../../interfaces/note';
+import {Card} from '../../interfaces/card';
 import {UserVocab} from '../../services/user-vocab';
 import {Magnet} from '../magnet/magnet';
 
@@ -12,9 +12,9 @@ import {Magnet} from '../magnet/magnet';
 })
 export class Vocab {
     @Input() id: string;
-    @Output() wordSelect: EventEmitter<Note> = new EventEmitter();
+    @Output() wordSelect: EventEmitter<Card> = new EventEmitter();
 
-    words: Note[];
+    words: Card[];
 
     constructor(private userVocab: UserVocab) {}
 
@@ -22,22 +22,22 @@ export class Vocab {
         this.words = this.userVocab.load(this.id);
     }
 
-    select(item) {
-        this.wordSelect.next(item);
+    select(card: Card) {
+        this.wordSelect.next(card);
     }
 
-    remove(item) {
-        this.userVocab.remove(this.id, item);
+    remove(card: Card) {
+        this.userVocab.remove(card);
     }
 
     exportVocab() {
-        let words = [{
-            text: '# Save this page as a .txt file and import it into Anki or Memrise.',
-            note: ''
-        }].concat(this.words).map(
-            word => word.text + '\t' + word.note
-        ).join('\n');
+        const header = '# Save this file and import into Anki or Memrise.\t\t\n';
 
-        window.open('data:text/plain;charset=utf-8,' + encodeURIComponent(words));
+        let words = this.words.map(
+            (word: Card) => [ word.text, word.note, `...${ word.context }...` ].join('\t')
+        );
+
+
+        window.open('data:text/plain;charset=utf-8,' + encodeURIComponent(header + words.join('\n')));
     }
 };

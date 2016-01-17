@@ -11,7 +11,7 @@ import {Backend} from './services/backend';
 import {UserVocab} from './services/user-vocab';
 
 
-if (1 || window.location.host == 'www.interlinear.io') {
+if (window.location.host == 'www.interlinear.io') {
     enableProdMode()
 }
 
