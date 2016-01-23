@@ -74,9 +74,11 @@ export class Book {
     }
 
     private getContext(index: number): string {
-        const range: number = 20;
+        const range: number = 30;
 
-        let slice = this.annotations.slice(index - range, index + range);
+        let start = Math.max(index - range, 0);
+        let end = Math.min(start + range * 2, this.annotations.length - 1);
+        let slice = this.annotations.slice(start, end);
         let text = slice.map((note: Note) => note.text).join('').trim();
 
         return text;
