@@ -14,12 +14,12 @@
 
     <div class="vocab__list">
         <div class="vocab__item"
-             *ngFor="#item of words"
-             (click)="select(item)" [magnet]="'#' + item.id">
-            <span class="vocab__text">{{ item.text }}</span> –
-            <span class="vocab__note">{{ item.note }}</span>
+             *ngFor="#card of words"
+             (click)="select(card)" [magnet]="'#item_' + card.position">
+            <span class="vocab__text">{{ card.text }}</span> –
+            <span class="vocab__note">{{ card.note }}</span>
 
-            <i class="fa fa-trash vocab__delete" title="Delete" (click)="remove(item)"></i>
+            <i class="fa fa-trash vocab__delete" title="Delete" (click)="remove(card)"></i>
         </div>
     </div>
 </div>

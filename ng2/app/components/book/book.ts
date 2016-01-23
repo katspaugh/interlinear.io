@@ -55,7 +55,7 @@ export class Book {
         let unique = {};
 
         annotations.forEach(function (item, index) {
-            item.id = 'item_' + index;
+            item.index = index;
 
             if (item.note) {
                 var key = item.note.toLowerCase() + '//' +
@@ -82,9 +82,9 @@ export class Book {
         return text;
     }
 
-    public selectTerm(note: Note, index: number) {
+    public selectTerm(note: Note) {
         this.currentTerm = {
-            id: note.id,
+            index: note.index,
             text: note.text.replace(DELIMS_RE, ''),
             note: note.note
         };
@@ -93,8 +93,8 @@ export class Book {
             bookId: this.id,
             text: this.currentTerm.text,
             note: this.currentTerm.note,
-            position: index,
-            context: this.getContext(index)
+            position: note.index,
+            context: this.getContext(note.index)
         };
 
         this.userVocab.add(card);
