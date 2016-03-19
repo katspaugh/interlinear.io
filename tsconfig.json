@@ -2,18 +2,21 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es5",
-        "noImplicitAny": false,
-        "outDir": "dist",
+        "outDir": "public",
         "rootDir": ".",
-        "sourceMap": false,
+        "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "moduleResolution": "node"
     },
+    "compileOnSave": false,
+    "buildOnSave": false,
+    "atom": { "rewriteTsconfig": false },
     "exclude": [
         "etc",
         "src",
         "node_modules",
         "typings"
     ]
+
 }

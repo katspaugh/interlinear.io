@@ -9,7 +9,8 @@ export class Magnet implements AfterViewInit {
     constructor(private el: ElementRef, private renderer: Renderer) {}
 
     private css(prop, val) {
-        this.renderer.setElementStyle(this.el, prop, val);
+        var el = this.el.nativeElement;
+        this.renderer.setElementStyle(el, prop, val);
     }
 
     ngAfterViewInit() {

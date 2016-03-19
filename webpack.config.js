@@ -1,26 +1,71 @@
 var webpack = require('webpack');
+var path = require('path');
 
-module.exports = {
+
+// Webpack Config
+var webpackConfig = {
   entry: {
-    'app': './ng2/app.ts',
-    'vendor': './ng2/vendor.ts'
+    'polyfills': './ng2/polyfills.ts',
+    'vendor':    './ng2/vendor.ts',
+    'app':       './ng2/app.ts'
   },
-  output: {
-    path: "./public",
-    filename: "bundle.js"
-  },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js')
-  ],
 
-  resolve: {
-    extensions: ['', '.ts', '.js']
+  output: {
+    path: './public'
   },
+
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({ name: [ 'app', 'vendor', 'polyfills' ], minChunks: Infinity }),
+  ],
 
   module: {
     loaders: [
-      { test: /\.ts$/, loader: 'ts-loader' },
-    ],
-    noParse: [ /angular2\/bundles\/.+/ ]
+      // .ts files for TypeScript
+      { test: /\.ts$/, loader: 'awesome-typescript-loader' },
+
+    ]
   }
+
 };
+
+
+// Our Webpack Defaults
+var defaultConfig = {
+  devtool: 'cheap-module-eval-source-map',
+  cache: true,
+  debug: true,
+  output: {
+    filename: '[name].bundle.js',
+    sourceMapFilename: '[name].map',
+    chunkFilename: '[id].chunk.js'
+  },
+
+  module: {
+    noParse: [
+      path.join(__dirname, 'node_modules', 'zone.js', 'dist'),
+      path.join(__dirname, 'node_modules', 'angular2', 'bundles')
+    ]
+  },
+
+  resolve: {
+    root: [ path.join(__dirname, 'src') ],
+    extensions: ['', '.ts', '.js']
+  },
+
+  devServer: {
+    historyApiFallback: true,
+    watchOptions: { aggregateTimeout: 300, poll: 1000 }
+  },
+
+  node: {
+    global: 1,
+    crypto: 'empty',
+    module: 0,
+    Buffer: 0,
+    clearImmediate: 0,
+    setImmediate: 0
+  }
+}
+
+var webpackMerge = require('webpack-merge');
+module.exports = webpackMerge(defaultConfig, webpackConfig);
