@@ -12,7 +12,7 @@ import {UserVocab} from './services/user-vocab';
 
 
 if (window.location.host == 'www.interlinear.io') {
-    enableProdMode()
+    enableProdMode();
 }
 
 

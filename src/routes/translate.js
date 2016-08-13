@@ -4,14 +4,34 @@
  * Translate word-for-word via Yandex.Translate
  */
 let Q = require('q');
+let path = require('path');
 let request = require('request-promise');
+let kuromoji = require('kuromoji');
 
 const API_URL = 'https://translate.yandex.net/api/v1.5/tr.json/translate';
 const PUNCTUATION = /[–,.;:'"()!?%&*=\[\]«»<>]+/g;
 
+const KUROMOJI_DICT = './node_modules/kuromoji/dict';
+let kuromojiTokenizer;
+kuromoji.builder({ dicPath: path.resolve(KUROMOJI_DICT) }).build(function (err, tokenizer) {
+    if (err) {
+        console.log(err);
+        return;
+    }
+
+    kuromojiTokenizer = tokenizer;
+});
+
+function tokenizeJapanese(text) {
+    if (!kuromojiTokenizer) return null;
+    if (!/[\u3040-\u309F\u30A0-\u30FF]/.test(text)) return null;
+
+    let tokens = kuromojiTokenizer.tokenize(text);
+    return tokens.map((token) => token.surface_form);
+}
 
 function splitWords(text) {
-    return text.match(/(\s+|\S+)/g);
+    return tokenizeJapanese(text) || text.match(/(\s+|\S+)/g);
 }
 
 function createWordTags(words) {
